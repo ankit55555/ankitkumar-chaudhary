@@ -17,63 +17,164 @@
 {%- endif -%}
 
 <style>
-  header-drawer {
-    justify-self: start;
-    margin-left: -1.2rem;
-  }
-
-  {%- if section.settings.sticky_header_type == 'reduce-logo-size' -%}
-    .scrolled-past-header .header__heading-logo-wrapper {
-      width: 75%;
-    }
-  {%- endif -%}
-
-  {%- if section.settings.menu_type_desktop != "drawer" -%}
-    @media screen and (min-width: 990px) {
       header-drawer {
-        display: none;
+        justify-self: start;
+        margin-left: -1.2rem;
       }
+      header.header.header--middle-left.header--mobile-center.page-width.header--has-menu {
+        padding: 10px 16px;
     }
-  {%- endif -%}
 
-  .menu-drawer-container {
-    display: flex;
-  }
-
-  .list-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .list-menu--inline {
-    display: inline-flex;
-    flex-wrap: wrap;
-  }
-
-  summary.list-menu__item {
-    padding-right: 2.7rem;
-  }
-
-  .list-menu__item {
-    display: flex;
-    align-items: center;
-    line-height: calc(1 + 0.3 / var(--font-body-scale));
-  }
-
-  .list-menu__item--link {
-    text-decoration: none;
-    padding-bottom: 1rem;
-    padding-top: 1rem;
-    line-height: calc(1 + 0.8 / var(--font-body-scale));
-  }
-
-  @media screen and (min-width: 750px) {
-    .list-menu__item--link {
-      padding-bottom: 0.5rem;
-      padding-top: 0.5rem;
+    svg.header__cta-icon{
+      margin-left: 10px;
     }
+      {%- if section.settings.sticky_header_type == 'reduce-logo-size' -%}
+        .scrolled-past-header .header__heading-logo-wrapper {
+          width: 75%;
+        }
+      {%- endif -%}
+
+      {%- if section.settings.menu_type_desktop != "drawer" -%}
+        @media screen and (min-width: 990px) {
+          header-drawer {
+            display: none;
+          }
+
+        }
+      {%- endif -%}
+
+      .menu-drawer-container {
+        display: flex;
+      }
+
+      .list-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .list-menu--inline {
+        display: inline-flex;
+        flex-wrap: wrap;
+      }
+
+      summary.list-menu__item {
+        padding-right: 2.7rem;
+      }
+
+      .list-menu__item {
+        display: flex;
+        align-items: center;
+        line-height: calc(1 + 0.3 / var(--font-body-scale));
+      }
+
+      .list-menu__item--link {
+        text-decoration: none;
+        padding-bottom: 1rem;
+        padding-top: 1rem;
+        line-height: calc(1 + 0.8 / var(--font-body-scale));
+      }
+
+      .header__center-text {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        font: inherit;
+        color: currentColor;
+        white-space: nowrap;
+        line-height: 13.5px;
+        letter-spacing: 0;
+      }
+      .header__button {
+      font-size: 16px;
+      letter-spacing: 0;
+      line-height: 21px;
   }
+      
+      /* Desktop CTA button styling to match mobile */
+      .header__cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        background: #FFF047 !important;
+        color: #000 !important;
+        border: 0 !important;
+        padding: 12px 44px;
+        text-transform: uppercase;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 21px;
+        letter-spacing: 0;
+        font-family: 'Jost', sans-serif;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+      }
+      
+      .header__cta:before,
+      .header__cta:after {
+        display: none !important;
+      }
+      
+      .header__cta:hover,
+      .header__cta:focus {
+        background: #FFF047 !important;
+        color: #000 !important;
+        box-shadow: none !important;
+      }
+      
+      .header__cta .header__cta-icon { 
+        color: currentColor; 
+      }
+      .header__mobile-promo { display: none; }
+      @media screen and (max-width: 749px) {
+        .header__center-text { display: none; }
+        .header__mobile-promo {
+          display: block;
+          background: #f3f3f3;
+          padding: 16px;
+          text-align: center;
+        }
+        .header__mobile-promo-text {
+          margin: 13px 0 12px;
+          font-size: 16px;
+          line-height: 13.4px;
+          letter-spacing: 0;
+          font-family: 'Jost', sans-serif;
+        }
+        .header__cta.header__cta--mobile {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          background: #FFF047;
+          color: #000;
+          border: 0;
+          padding: 12px 44px;
+          text-transform: uppercase;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 21px;
+          letter-spacing: 0;
+          font-family: 'Jost', sans-serif;
+        }
+
+        .header__cta.header__cta--mobile .header__cta-icon { color: currentColor; }
+      }
+
+      @media screen and (min-width: 750px) {
+        .list-menu__item--link {
+          padding-bottom: 0.5rem;
+          padding-top: 0.5rem;
+        }
+      }
+      @media screen and (max-width: 999px) {
+        .header__button, .header__center-text{
+          display: none;
+        }
+      }
 </style>
 
 {%- style -%}
@@ -180,6 +281,10 @@
       {%- endif -%}
     {%- endif -%}
 
+    {% if section.settings.center_header_text != blank %}
+      <p class="header__center-text">{{ section.settings.center_header_text }}</p>
+    {% endif %}
+
     {%- liquid
       if section.settings.menu != blank
         if section.settings.menu_type_desktop == 'dropdown'
@@ -247,7 +352,26 @@
           </localization-form>
         {%- endif -%}
       </div>
-      {% render 'header-search', input_id: 'Search-In-Modal' %}
+      <div class="header__button">
+        {% if section.settings.header_cta_label != blank and section.settings.header_cta_link != blank %}
+          <a class="button button--primary header__cta" href="{{ section.settings.header_cta_link }}">
+            <span>{{ section.settings.header_cta_label }}</span>
+            <svg
+              class="header__cta-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="27"
+              height="12"
+              viewBox="0 0 27 12"
+              fill="currentColor"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M1 5.25C0.585786 5.25 0.25 5.58579 0.25 6C0.25 6.41421 0.585786 6.75 1 6.75L1 5.25ZM26.5303 6.53033C26.8232 6.23743 26.8232 5.76256 26.5303 5.46967L21.7574 0.696697C21.4645 0.403804 20.9896 0.403804 20.6967 0.696697C20.4038 0.989591 20.4038 1.46446 20.6967 1.75736L24.9393 6L20.6967 10.2426C20.4038 10.5355 20.4038 11.0104 20.6967 11.3033C20.9896 11.5962 21.4645 11.5962 21.7574 11.3033L26.5303 6.53033ZM1 6.75L26 6.75L26 5.25L1 5.25L1 6.75Z" fill="currentColor"/>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+      {% comment %} {% render 'header-search', input_id: 'Search-In-Modal' %} {% endcomment %}
 
       {%- if shop.customer_accounts_enabled -%}
         <a
@@ -647,7 +771,16 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 20
-    }
+    },
+    {
+      "type": "text",
+      "id": "center_header_text",
+      "label": "Center header text",
+      "default": "Find the ideal gift for your loved ones."
+    },
+    { "type": "header", "content": "Header CTA" },
+    { "type": "text", "id": "header_cta_label", "label": "CTA label", "default": "Choose gift" },
+    { "type": "url", "id": "header_cta_link", "label": "CTA link" }
   ],
   "blocks": [
     {

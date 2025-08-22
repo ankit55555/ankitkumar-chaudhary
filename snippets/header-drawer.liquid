@@ -19,7 +19,18 @@
     <div id="menu-drawer" class="gradient menu-drawer motion-reduce color-{{ section.settings.menu_color_scheme }}">
       <div class="menu-drawer__inner-container">
         <div class="menu-drawer__navigation-container">
-          <nav class="menu-drawer__navigation">
+          {% if section.settings.center_header_text != blank and section.settings.header_cta_label != blank and section.settings.header_cta_link != blank %}
+            <div class="header__mobile-promo">
+              <p class="header__mobile-promo-text">{{ section.settings.center_header_text }}</p>
+              <a class="button header__cta header__cta--mobile" href="{{ section.settings.header_cta_link }}">
+                <span>{{ section.settings.header_cta_label }}</span>
+                <svg class="header__cta-icon" xmlns="http://www.w3.org/2000/svg" width="27" height="12" viewBox="0 0 27 12" fill="currentColor" aria-hidden="true" focusable="false">
+                  <path d="M1 5.25C0.585786 5.25 0.25 5.58579 0.25 6C0.25 6.41421 0.585786 6.75 1 6.75L1 5.25ZM26.5303 6.53033C26.8232 6.23743 26.8232 5.76256 26.5303 5.46967L21.7574 0.696697C21.4645 0.403804 20.9896 0.403804 20.6967 0.696697C20.4038 0.989591 20.4038 1.46446 20.6967 1.75736L24.9393 6L20.6967 10.2426C20.4038 10.5355 20.4038 11.0104 20.6967 11.3033C20.9896 11.5962 21.4645 11.5962 21.7574 11.3033L26.5303 6.53033ZM1 6.75L26 6.75L26 5.25L1 5.25L1 6.75Z" fill="currentColor"/>
+                </svg>
+              </a>
+            </div>
+          {% endif %}
+          {% comment %} <nav class="menu-drawer__navigation">
             <ul class="menu-drawer__menu has-submenu list-menu" role="list">
               {%- for link in section.settings.menu.links -%}
                 <li>
@@ -287,7 +298,7 @@
                 </li>
               {%- endif -%}
             </ul>
-          </div>
+          </div> {% endcomment %}
         </div>
       </div>
     </div>

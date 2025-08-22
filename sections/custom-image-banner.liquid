@@ -1,0 +1,260 @@
+{{ 'section-custom-image-banner.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign fetch_priority = 'auto'
+  if section.index == 1
+    assign fetch_priority = 'high'
+  endif
+-%}
+
+{%- style -%}
+  #CustomBanner-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile | default: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile | default: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #CustomBanner-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop | default: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop | default: 0 }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section id="CustomBanner-{{ section.id }}" class="custom-banner color-{{ section.settings.color_scheme }} gradient">
+  {%- if section.settings.top_strip_enable -%}
+    <div class="custom-banner__top-strip">
+      <div class="custom-banner__top-strip-inner">
+        <div class="custom-banner__top-left">{{ section.settings.top_strip_left }}</div>
+        <div class="custom-banner__top-center">{{ section.settings.top_strip_center }}</div>
+        {%- if section.settings.top_strip_cta_label != blank -%}
+          <a class="button button--secondary custom-banner__top-cta" href="{{ section.settings.top_strip_cta_link }}">
+            {{- section.settings.top_strip_cta_label | escape -}}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+  <div class="custom-banner__media">
+    {%- if section.settings.image_desktop != blank -%}
+      <picture>
+        {%- if section.settings.image_mobile != blank -%}
+          <source
+            media="(max-width: 749px)"
+            srcset="{{ section.settings.image_mobile | image_url: width: 1500 }} 1500w, {{ section.settings.image_mobile | image_url: width: 900 }} 900w, {{ section.settings.image_mobile | image_url: width: 600 }} 600w"
+            sizes="100vw"
+          >
+        {%- endif -%}
+        {%- liquid
+          assign d_width = section.settings.image_desktop.width
+          assign d_height = section.settings.image_desktop.width | divided_by: section.settings.image_desktop.aspect_ratio
+        -%}
+        <img
+          src="{{ section.settings.image_desktop | image_url: width: 2000 }}"
+          srcset="{{ section.settings.image_desktop | image_url: width: 3840 }} 3840w, {{ section.settings.image_desktop | image_url: width: 3000 }} 3000w, {{ section.settings.image_desktop | image_url: width: 2000 }} 2000w, {{ section.settings.image_desktop | image_url: width: 1500 }} 1500w, {{ section.settings.image_desktop | image_url: width: 1100 }} 1100w, {{ section.settings.image_desktop | image_url: width: 750 }} 750w"
+          sizes="100vw"
+          alt="{{ section.settings.alt_text | escape }}"
+          loading="lazy"
+          fetchpriority="{{ fetch_priority }}"
+          class="custom-banner__img"
+          width="{{ d_width }}"
+          height="{{ d_height }}"
+        >
+      </picture>
+    {%- else -%}
+      <div class="custom-banner__placeholder media placeholder">
+        {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="custom-banner__content custom-banner__content--{{ section.settings.desktop_content_position }} custom-banner__content--align-{{ section.settings.desktop_content_alignment }}">
+    <div class="custom-banner__card">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'heading' -%}
+            <h2 class="custom-banner__heading {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
+              {{ block.settings.heading }}
+            </h2>
+          {%- when 'text' -%}
+            <div class="custom-banner__text rte {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
+              {{ block.settings.text }}
+            </div>
+          {%- when 'button' -%}
+            {%- if block.settings.button_label != blank -%}
+              <a
+                class="button button--primary custom-banner__button"
+                href="{{ block.settings.button_link }}"
+                {{ block.shopify_attributes }}
+              >
+                {{- block.settings.button_label | escape -}}
+                <svg class="custom-banner__button-icon" xmlns="http://www.w3.org/2000/svg" width="27" height="12" viewBox="0 0 27 12" fill="currentColor" aria-hidden="true" focusable="false">
+                  <path d="M1 5.25C0.585786 5.25 0.25 5.58579 0.25 6C0.25 6.41421 0.585786 6.75 1 6.75L1 5.25ZM26.5303 6.53033C26.8232 6.23743 26.8232 5.76256 26.5303 5.46967L21.7574 0.696697C21.4645 0.403804 20.9896 0.403804 20.6967 0.696697C20.4038 0.989591 20.4038 1.46446 20.6967 1.75736L24.9393 6L20.6967 10.2426C20.4038 10.5355 20.4038 11.0104 20.6967 11.3033C20.9896 11.5962 21.4645 11.5962 21.7574 11.3033L26.5303 6.53033ZM1 6.75L26 6.75L26 5.25L1 5.25L1 6.75Z" fill="currentColor"/>
+                </svg>
+              </a>
+             
+            {%- endif -%}
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- if section.settings.bottom_strip_text != blank -%}
+    <div class="custom-banner__strip">
+    
+        <p class="custom-banner__strip-text">{{ section.settings.bottom_strip_text }}</p>
+   
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Custom image banner",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "image_picker", "id": "image_desktop", "label": "Desktop image" },
+    { "type": "image_picker", "id": "image_mobile", "label": "Mobile image" },
+    { "type": "text", "id": "alt_text", "label": "Alt text", "default": "Banner" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Colors", "default": "scheme-1" },
+    { "type": "header", "content": "Section spacing" },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    { "type": "header", "content": "Top promo strip" },
+    { "type": "checkbox", "id": "top_strip_enable", "label": "Show top strip", "default": false },
+    { "type": "text", "id": "top_strip_left", "label": "Left label", "default": "TISSO VISON" },
+    {
+      "type": "text",
+      "id": "top_strip_center",
+      "label": "Center message",
+      "default": "Find the ideal gift for your loved ones."
+    },
+    { "type": "text", "id": "top_strip_cta_label", "label": "CTA label", "default": "CHOOSE GIFT" },
+    { "type": "url", "id": "top_strip_cta_link", "label": "CTA link" },
+    {
+      "type": "select",
+      "id": "desktop_content_position",
+      "label": "Desktop content vertical position",
+      "default": "middle",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "middle", "label": "Middle" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desktop_content_alignment",
+      "label": "Desktop content horizontal alignment",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "bottom_strip_text",
+      "label": "Bottom strip text",
+      "default": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "The Gift Guide" },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Heading size",
+          "default": "h1",
+          "options": [
+            { "value": "h2", "label": "H2" },
+            { "value": "h1", "label": "H1" },
+            { "value": "h0", "label": "H0" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "Discover Joy: Your Ultimate Holiday Gift Destination."
+        },
+        {
+          "type": "select",
+          "id": "text_style",
+          "label": "Text style",
+          "default": "body",
+          "options": [
+            { "value": "body", "label": "Body" },
+            { "value": "subtitle", "label": "Subtitle" },
+            { "value": "caption-with-letter-spacing", "label": "Caption" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "button_label", "label": "Label", "default": "Shop now" },
+        { "type": "url", "id": "button_link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Custom image banner", "blocks": [{ "type": "heading" }, { "type": "text" }, { "type": "button" }] }
+  ]
+}
+{% endschema %}
