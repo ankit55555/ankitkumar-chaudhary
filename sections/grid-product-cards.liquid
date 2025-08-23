@@ -9,6 +9,14 @@
     padding-bottom: {{ section.settings.padding_bottom | default: 0 }}px;
   "
 >
+  <style>
+    @media (max-width: 749px) {
+      #section-{{ section.id }} {
+        padding-top: {{ section.settings.padding_top | default: 0 | divided_by: 2 }}px !important;
+        padding-bottom: {{ section.settings.padding_bottom | default: 0 | divided_by: 2 }}px !important;
+      }
+    }
+  </style>
   {%- if section.settings.heading != blank -%}
     <h2 class="fsp-heading">{{ section.settings.heading }}</h2>
   {%- endif -%}
