@@ -41,10 +41,10 @@
       ],
       "name": "Custom image banner",
       "settings": {
-        "image_desktop": "shopify://shop_images/autumn-photographer-taking-picture_925x_1619bf60-7f6c-4f08-8201-9e5f62349789.jpg",
-        "image_mobile": "shopify://shop_images/city-woman-fashion_925x_2x_e91139c3-68ff-49da-98c9-5a56a049fb30.jpg",
+        "image_desktop": "shopify://shop_images/city-woman-fashion_925x_2x_e91139c3-68ff-49da-98c9-5a56a049fb30.jpg",
+        "image_mobile": "shopify://shop_images/autumn-photographer-taking-picture_925x_1619bf60-7f6c-4f08-8201-9e5f62349789.jpg",
         "alt_text": "Banner",
-        "color_scheme": "",
+        "color_scheme": "scheme-1",
         "enable_container": true,
         "apply_card_bg": false,
         "card_bg_opacity": 80,
@@ -63,7 +63,7 @@
       "settings": {
         "heading": "Tisso vison in the wild",
         "heading_link": "Tisso vison in the wild",
-        "padding_top": 66,
+        "padding_top": 90,
         "padding_bottom": 0,
         "product_source": "collection",
         "collection": "frontpage",
