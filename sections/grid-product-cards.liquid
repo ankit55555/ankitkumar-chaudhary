@@ -7,8 +7,6 @@
   style="
     padding-top: {{ section.settings.padding_top | default: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | default: 0 }}px;
-    margin-top: {{ section.settings.margin_top | default: 0 }}px;
-    margin-bottom: {{ section.settings.margin_bottom | default: 0 }}px;
   "
 >
   {%- if section.settings.heading != blank -%}
@@ -20,7 +18,12 @@
       {%- for product in section.settings.collection.products limit: product_limit -%}
         {%- assign icon_key = 'icon_pos_' | append: forloop.index -%}
         {%- assign icon_pos = section.settings[icon_key] | default: 'top-right' -%}
-        <article class="fsp-card" role="article" data-product-id="{{ product.id }}" data-modal-id="fsp-modal-{{ product.id }}">
+        <article
+          class="fsp-card"
+          role="article"
+          data-product-id="{{ product.id }}"
+          data-modal-id="fsp-modal-{{ product.id }}"
+        >
           {%- if product.featured_media -%}
             {%- assign image_alt = product.featured_media.alt | default: product.title -%}
             <a href="{{ product.url }}" class="fsp-card__image-link">
@@ -30,11 +33,18 @@
                 | image_tag: alt: image_alt, loading: 'lazy', class: 'fsp-card__image'
               }}
             </a>
-            <span class="fsp-icon fsp-icon--{{ icon_pos | handleize }}" aria-hidden="false" role="button" tabindex="0" aria-label="Quick view {{ product.title }}" data-open-modal="fsp-modal-{{ product.id }}">
+            <span
+              class="fsp-icon fsp-icon--{{ icon_pos | handleize }}"
+              aria-hidden="false"
+              role="button"
+              tabindex="0"
+              aria-label="Quick view {{ product.title }}"
+              data-open-modal="fsp-modal-{{ product.id }}"
+            >
               {% render 'fsp-plus-icon' %}
             </span>
           {%- endif -%}
-          
+
           {% render 'fsp-quick-view', product: product %}
         </article>
       {%- endfor -%}
@@ -45,7 +55,12 @@
         {%- assign icon_key = 'icon_pos_' | append: forloop.index -%}
         {%- assign icon_pos = section.settings[icon_key] | default: 'top-right' -%}
         {%- if product -%}
-          <article class="fsp-card" role="article" data-product-id="{{ product.id }}" data-modal-id="fsp-modal-{{ product.id }}">
+          <article
+            class="fsp-card"
+            role="article"
+            data-product-id="{{ product.id }}"
+            data-modal-id="fsp-modal-{{ product.id }}"
+          >
             {%- if product.featured_media -%}
               {%- assign image_alt = product.featured_media.alt | default: product.title -%}
               <a href="{{ product.url }}" class="fsp-card__image-link">
@@ -55,11 +70,18 @@
                   | image_tag: alt: image_alt, loading: 'lazy', class: 'fsp-card__image'
                 }}
               </a>
-              <span class="fsp-icon fsp-icon--{{ icon_pos | handleize }}" aria-hidden="false" role="button" tabindex="0" aria-label="Quick view {{ product.title }}" data-open-modal="fsp-modal-{{ product.id }}">
+              <span
+                class="fsp-icon fsp-icon--{{ icon_pos | handleize }}"
+                aria-hidden="false"
+                role="button"
+                tabindex="0"
+                aria-label="Quick view {{ product.title }}"
+                data-open-modal="fsp-modal-{{ product.id }}"
+              >
                 {% render 'fsp-plus-icon' %}
               </span>
             {%- endif -%}
-            
+
             {% render 'fsp-quick-view', product: product %}
           </article>
         {%- endif -%}
@@ -72,7 +94,15 @@
 {
   "name": "The Grid",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Tisso vison in the wild" },
+    { "type": "text",
+    "id": "heading",
+    "label": "Heading",
+    "default": "Tisso vison in the wild"
+    },
+    {
+      "type": "text",
+    "id": "heading_link",
+    "label": "Heading link", "default": "Tisso vison in the wild" },
     {
       "type": "range",
       "id": "padding_top",
@@ -86,16 +116,6 @@
       "type": "range",
       "id": "padding_bottom",
       "label": "Padding bottom (px)",
-      "min": 0,
-      "max": 200,
-      "step": 2,
-      "default": 0
-    },
-    { "type": "range", "id": "margin_top", "label": "Margin top (px)", "min": 0, "max": 200, "step": 2, "default": 0 },
-    {
-      "type": "range",
-      "id": "margin_bottom",
-      "label": "Margin bottom (px)",
       "min": 0,
       "max": 200,
       "step": 2,
@@ -223,6 +243,9 @@
       ]
     }
   ],
-  "presets": [{ "name": "The Grid" }]
+  "presets": [
+      { "name": "The Grid" },
+    { "name": "The Grid with link" }
+  ]
 }
 {% endschema %}

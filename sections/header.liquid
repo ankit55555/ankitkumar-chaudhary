@@ -22,7 +22,9 @@
         margin-left: -1.2rem;
       }
       header.header.header--middle-left.header--mobile-center.page-width.header--has-menu {
-        padding: 10px 16px;
+        padding: 22.5px 50px;
+        max-width: 1440px;
+        margin: 0 auto;
     }
 
     svg.header__cta-icon{
@@ -111,6 +113,7 @@
         font-family: 'Jost', sans-serif;
         box-shadow: none !important;
         border-radius: 0 !important;
+        transition: all 0.3s ease;
       }
       
       .header__cta:before,
@@ -120,9 +123,18 @@
       
       .header__cta:hover,
       .header__cta:focus {
-        background: #FFF047 !important;
+        background: #FFE500 !important;
         color: #000 !important;
-        box-shadow: none !important;
+        box-shadow: 0 4px 12px rgba(255, 240, 71, 0.4) !important;
+        transform: translateY(-2px);
+      }
+      
+      .header__cta:hover .header__cta-icon {
+        transform: translateX(4px);
+      }
+      
+      .header__cta .header__cta-icon {
+        transition: transform 0.3s ease;
       }
       
       .header__cta .header__cta-icon { 
@@ -130,6 +142,9 @@
       }
       .header__mobile-promo { display: none; }
       @media screen and (max-width: 749px) {
+        header.header.header--middle-left.header--mobile-center.page-width.header--has-menu {
+          padding: 24px 16.5px;
+        }
         .header__center-text { display: none; }
         .header__mobile-promo {
           display: block;
@@ -159,6 +174,21 @@
           line-height: 21px;
           letter-spacing: 0;
           font-family: 'Jost', sans-serif;
+          transition: all 0.3s ease;
+        }
+        
+        .header__cta.header__cta--mobile:hover {
+          background: #FFE500;
+          box-shadow: 0 4px 12px rgba(255, 240, 71, 0.4);
+          transform: translateY(-2px);
+        }
+        
+        .header__cta.header__cta--mobile:hover .header__cta-icon {
+          transform: translateX(4px);
+        }
+        
+        .header__cta.header__cta--mobile .header__cta-icon {
+          transition: transform 0.3s ease;
         }
 
         .header__cta.header__cta--mobile .header__cta-icon { color: currentColor; }
@@ -373,7 +403,7 @@
       </div>
       {% comment %} {% render 'header-search', input_id: 'Search-In-Modal' %} {% endcomment %}
 
-      {%- if shop.customer_accounts_enabled -%}
+      {% comment %} {%- if shop.customer_accounts_enabled -%}
         <a
           href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
           class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} small-hide{% endif %}"
@@ -400,7 +430,7 @@
             -%}
           </span>
         </a>
-      {%- endif -%}
+      {%- endif -%} {% endcomment %}
 
       {%- for block in section.blocks -%}
         {%- case block.type -%}
@@ -409,22 +439,24 @@
         {%- endcase -%}
       {%- endfor -%}
 
-      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
-        {% if cart == empty %}
-          <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
-        {% else %}
-          <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
-        {% endif %}
-        <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
-        {%- if cart != empty -%}
-          <div class="cart-count-bubble">
-            {%- if cart.item_count < 100 -%}
-              <span aria-hidden="true">{{ cart.item_count }}</span>
-            {%- endif -%}
-            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-          </div>
-        {%- endif -%}
-      </a>
+      {%- if section.settings.show_cart_icon -%}
+        <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
+          {% if cart == empty %}
+            <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
+          {% else %}
+            <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
+          {% endif %}
+          <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+          {%- if cart != empty -%}
+            <div class="cart-count-bubble">
+              {%- if cart.item_count < 100 -%}
+                <span aria-hidden="true">{{ cart.item_count }}</span>
+              {%- endif -%}
+              <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+            </div>
+          {%- endif -%}
+        </a>
+      {%- endif -%}
     </div>
   </header>
 </{{ header_tag }}>
@@ -780,7 +812,18 @@
     },
     { "type": "header", "content": "Header CTA" },
     { "type": "text", "id": "header_cta_label", "label": "CTA label", "default": "Choose gift" },
-    { "type": "url", "id": "header_cta_link", "label": "CTA link" }
+    { "type": "url", "id": "header_cta_link", "label": "CTA link" },
+    {
+      "type": "header",
+      "content": "Cart Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart_icon",
+      "label": "Show cart icon",
+      "default": true,
+      "info": "Toggle to show or hide the cart icon in the header"
+    }
   ],
   "blocks": [
     {

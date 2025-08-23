@@ -14,7 +14,7 @@
         </div>
         <div class="fsp-modal__info">
           <h3 class="fsp-modal__title" id="fsp-modal-title-{{ product_obj.id }}">{{ product_obj.title }}</h3>
-          <div class="fsp-modal__price" data-price>{{ product_obj.selected_or_first_available_variant.price | money }}</div>
+          <div class="fsp-modal__price" data-price>{{ product_obj.selected_or_first_available_variant.price | money_with_currency }}</div>
           <p class="fsp-modal__desc">{{ product_obj.description | strip_html | truncate: 200 }}</p>
           <form method="post" action="{{ routes.cart_add_url }}" class="fsp-form" data-product-form novalidate>
             <input type="hidden" name="id" value="{{ product_obj.selected_or_first_available_variant.id }}" data-variant-id>

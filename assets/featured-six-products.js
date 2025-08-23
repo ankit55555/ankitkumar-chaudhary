@@ -98,13 +98,13 @@ document.addEventListener('DOMContentLoaded', function () {
 			minVariant = productData.variants.slice().sort(function (a,b){return a.price-b.price;})[0];
 		}
 
-		function formatMoneyCents(cents) {
-			if (window.Shopify && typeof Shopify.formatMoney === 'function') {
-				var mf = (window.theme && window.theme.moneyFormat) || (window.Shopify && window.Shopify.money_format) || '${{amount}}';
-				return Shopify.formatMoney(cents, mf);
-			}
-			return (cents / 100).toFixed(2);
+			function formatMoneyCents(cents) {
+		if (window.Shopify && typeof Shopify.formatMoney === 'function') {
+			var mf = (window.theme && window.theme.moneyWithCurrencyFormat) || (window.Shopify && window.Shopify.money_with_currency_format) || '${{amount}} {{currency}}';
+			return Shopify.formatMoney(cents, mf);
 		}
+		return '$' + (cents / 100).toFixed(2) + ' CAD';
+	}
 
 		function getCurrentOptions() {
 			var options = [];

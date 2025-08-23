@@ -18,6 +18,11 @@
       padding-bottom: {{ section.settings.padding_bottom_desktop | default: 0 }}px;
     }
   }
+  {%- if section.settings.apply_card_bg -%}
+  #CustomBanner-{{ section.id }} .custom-banner__card {
+    background-color: rgba(var(--color-background), {{ section.settings.card_bg_opacity | default: 80 | divided_by: 100.0 }});
+  }
+  {%- endif -%}
 {%- endstyle -%}
 
 <section id="CustomBanner-{{ section.id }}" class="custom-banner color-{{ section.settings.color_scheme }} gradient">
@@ -68,6 +73,11 @@
   </div>
 
   <div class="custom-banner__content custom-banner__content--{{ section.settings.desktop_content_position }} custom-banner__content--align-{{ section.settings.desktop_content_alignment }}">
+    {%- if section.settings.enable_container -%}
+      <div class="custom-banner__content-inner">
+    {%- endif -%}
+    {% assign banner_button_label = '' %}
+    {% assign banner_button_link = '' %}
     <div class="custom-banner__card">
       {%- for block in section.blocks -%}
         {%- case block.type -%}
@@ -81,28 +91,74 @@
             </div>
           {%- when 'button' -%}
             {%- if block.settings.button_label != blank -%}
+              {%- assign banner_button_label = block.settings.button_label -%}
+              {%- assign banner_button_link = block.settings.button_link -%}
               <a
-                class="button button--primary custom-banner__button"
-                href="{{ block.settings.button_link }}"
+                class="button button--primary custom-banner__button custom-banner__button--desktop"
+                href="{{ banner_button_link }}"
                 {{ block.shopify_attributes }}
               >
-                {{- block.settings.button_label | escape -}}
-                <svg class="custom-banner__button-icon" xmlns="http://www.w3.org/2000/svg" width="27" height="12" viewBox="0 0 27 12" fill="currentColor" aria-hidden="true" focusable="false">
+                {{- banner_button_label | escape -}}
+                <svg
+                  class="custom-banner__button-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="27"
+                  height="12"
+                  viewBox="0 0 27 12"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  focusable="false"
+                >
                   <path d="M1 5.25C0.585786 5.25 0.25 5.58579 0.25 6C0.25 6.41421 0.585786 6.75 1 6.75L1 5.25ZM26.5303 6.53033C26.8232 6.23743 26.8232 5.76256 26.5303 5.46967L21.7574 0.696697C21.4645 0.403804 20.9896 0.403804 20.6967 0.696697C20.4038 0.989591 20.4038 1.46446 20.6967 1.75736L24.9393 6L20.6967 10.2426C20.4038 10.5355 20.4038 11.0104 20.6967 11.3033C20.9896 11.5962 21.4645 11.5962 21.7574 11.3033L26.5303 6.53033ZM1 6.75L26 6.75L26 5.25L1 5.25L1 6.75Z" fill="currentColor"/>
                 </svg>
               </a>
-             
             {%- endif -%}
         {%- endcase -%}
       {%- endfor -%}
     </div>
+    {%- if section.settings.enable_container -%}
+      </div>
+    {%- endif -%}
   </div>
+
+  {%- if banner_button_label != blank -%}
+    <div class="custom-banner__mobile-cta">
+      {%- if section.settings.enable_container -%}
+        <div class="custom-banner__content-inner">
+      {%- endif -%}
+      <a
+        class="button button--primary custom-banner__button custom-banner__button--mobile"
+        href="{{ banner_button_link }}"
+      >
+        {{- banner_button_label | escape -}}
+        <svg
+          class="custom-banner__button-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="27"
+          height="12"
+          viewBox="0 0 27 12"
+          fill="currentColor"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path d="M1 5.25C0.585786 5.25 0.25 5.58579 0.25 6C0.25 6.41421 0.585786 6.75 1 6.75L1 5.25ZM26.5303 6.53033C26.8232 6.23743 26.8232 5.76256 26.5303 5.46967L21.7574 0.696697C21.4645 0.403804 20.9896 0.403804 20.6967 0.696697C20.4038 0.989591 20.4038 1.46446 20.6967 1.75736L24.9393 6L20.6967 10.2426C20.4038 10.5355 20.4038 11.0104 20.6967 11.3033C20.9896 11.5962 21.4645 11.5962 21.7574 11.3033L26.5303 6.53033ZM1 6.75L26 6.75L26 5.25L1 5.25L1 6.75Z" fill="currentColor"/>
+        </svg>
+      </a>
+      {%- if section.settings.enable_container -%}
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
 
   {%- if section.settings.bottom_strip_text != blank -%}
     <div class="custom-banner__strip">
-    
-        <p class="custom-banner__strip-text">{{ section.settings.bottom_strip_text }}</p>
-   
+      {%- if section.settings.enable_container -%}
+        <div class="page-width">
+      {%- endif -%}
+      <p class="custom-banner__strip-text">{{ section.settings.bottom_strip_text }}</p>
+      {%- if section.settings.enable_container -%}
+        </div>
+      {%- endif -%}
     </div>
   {%- endif -%}
 </section>
@@ -118,6 +174,19 @@
     { "type": "image_picker", "id": "image_mobile", "label": "Mobile image" },
     { "type": "text", "id": "alt_text", "label": "Alt text", "default": "Banner" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Colors", "default": "scheme-1" },
+    { "type": "checkbox", "id": "enable_container", "label": "Enable container (page width)", "default": true },
+    { "type": "header", "content": "Card background" },
+    { "type": "checkbox", "id": "apply_card_bg", "label": "Use color scheme background on card", "default": false },
+    {
+      "type": "range",
+      "id": "card_bg_opacity",
+      "label": "Card background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 80
+    },
     { "type": "header", "content": "Section spacing" },
     {
       "type": "range",
@@ -159,17 +228,6 @@
       "unit": "px",
       "default": 0
     },
-    { "type": "header", "content": "Top promo strip" },
-    { "type": "checkbox", "id": "top_strip_enable", "label": "Show top strip", "default": false },
-    { "type": "text", "id": "top_strip_left", "label": "Left label", "default": "TISSO VISON" },
-    {
-      "type": "text",
-      "id": "top_strip_center",
-      "label": "Center message",
-      "default": "Find the ideal gift for your loved ones."
-    },
-    { "type": "text", "id": "top_strip_cta_label", "label": "CTA label", "default": "CHOOSE GIFT" },
-    { "type": "url", "id": "top_strip_cta_link", "label": "CTA link" },
     {
       "type": "select",
       "id": "desktop_content_position",
