@@ -54,8 +54,9 @@
         "padding_top": 20,
         "padding_bottom": 20,
         "center_header_text": "Find the ideal gift for your loved ones.",
-        "header_cta_label": "Choose gift",
-        "header_cta_link": "shopify://collections/all"
+        "header_cta_label": "CHOOSE GIFT",
+        "header_cta_link": "shopify://collections",
+        "show_cart_icon": false
       }
     }
   },
