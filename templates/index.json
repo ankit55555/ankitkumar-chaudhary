@@ -75,11 +75,11 @@
         "product_5": "",
         "product_6": "",
         "icon_pos_1": "top-right",
-        "icon_pos_2": "top-center",
+        "icon_pos_2": "center",
         "icon_pos_3": "center-left",
         "icon_pos_4": "center",
-        "icon_pos_5": "bottom-right",
-        "icon_pos_6": "center-right"
+        "icon_pos_5": "top-right",
+        "icon_pos_6": "center-left"
       }
     }
   },
