@@ -1,0 +1,85 @@
+
+
+{%- assign product_obj = product -%}
+{%- if product_obj -%}
+  <div class="fsp-modal" id="fsp-modal-{{ product_obj.id }}" hidden data-product-modal data-product-id="{{ product_obj.id }}">
+    <div class="fsp-modal__overlay" data-close-modal></div>
+    <div class="fsp-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="fsp-modal-title-{{ product_obj.id }}">
+      <button class="fsp-modal__close" type="button" aria-label="Close" data-close-modal>{% render 'fsp-close-icon' %}</button>
+      <div class="fsp-modal__content">
+        <div class="fsp-modal__media">
+          {% if product_obj.featured_media %}
+            {{ product_obj.featured_media | image_url: width: 800 | image_tag: alt: product_obj.title, loading: 'lazy' }}
+          {% endif %}
+        </div>
+        <div class="fsp-modal__info">
+          <h3 class="fsp-modal__title" id="fsp-modal-title-{{ product_obj.id }}">{{ product_obj.title }}</h3>
+          <div class="fsp-modal__price" data-price>{{ product_obj.selected_or_first_available_variant.price | money_with_currency }}</div>
+          <p class="fsp-modal__desc">{{ product_obj.description | strip_html | truncate: 200 }}</p>
+          <form method="post" action="{{ routes.cart_add_url }}" class="fsp-form" data-product-form novalidate>
+            <input type="hidden" name="id" value="{{ product_obj.selected_or_first_available_variant.id }}" data-variant-id>
+
+            {%- assign color_option = nil -%}
+            {%- assign size_option = nil -%}
+            {%- for o in product_obj.options_with_values -%}
+              {%- assign od = o.name | downcase -%}
+              {%- if od contains 'color' -%}
+                {%- assign color_option = o -%}
+              {%- elsif od contains 'size' -%}
+                {%- assign size_option = o -%}
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- if color_option -%}
+              <div class="fsp-option" data-option-index="{{ color_option.position }}">
+                <label class="fsp-option__label">{{ color_option.name }}</label>
+                <div class="fsp-swatch-list" role="list">
+                  {%- for value in color_option.values -%}
+                    {%- assign v_down = value | downcase -%}
+                    {%- assign normalized_keyword = v_down | replace: ' ', '' | replace: '-', '' -%}
+                    {%- assign chip_color = normalized_keyword -%}
+                    {%- if v_down contains 'black' -%}
+                      {%- assign chip_color = '#000000' -%}
+                    {%- elsif v_down contains 'white' -%}
+                      {%- assign chip_color = '#ffffff' -%}
+                    {%- elsif v_down contains 'grey' or v_down contains 'gray' -%}
+                      {%- assign chip_color = '#9e9e9e' -%}
+                    {%- endif -%}
+                    <label class="fsp-swatch{% if color_option.selected_value == value %} is-selected{% endif %}{% if chip_color == 'white' or chip_color == '#ffffff' %} is-light{% endif %}"
+                      style="--swatch-color: {{ chip_color }}">
+                      <input class="visually-hidden fsp-option-input" type="radio" name="options[{{ color_option.name }}]" value="{{ value | escape }}" data-option-position="{{ color_option.position }}" {% if color_option.selected_value == value %}checked{% endif %}>
+                      <span class="fsp-swatch__chip" style="background: {{ chip_color }}"></span>
+                      <span>{{ value }}</span>
+                    </label>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endif -%}
+
+            {%- if size_option -%}
+              <div class="fsp-option" data-option-index="{{ size_option.position }}">
+                <label class="fsp-option__label">{{ size_option.name }}</label>
+                <select class="fsp-select" name="options[{{ size_option.name }}]" data-option-position="{{ size_option.position }}">
+                  <option value="" selected disabled>Choose your size</option>
+                  {%- for value in size_option.values -%}
+                    <option value="{{ value | escape }}">{{ value }}</option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            {%- endif -%}
+
+            <button type="submit" class="fsp-atc" {% unless product_obj.available %}disabled{% endunless %}>
+              <span>ADD TO CART</span>
+              <svg class="fsp-atc__icon" xmlns="http://www.w3.org/2000/svg" width="27" height="12" viewBox="0 0 27 12" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M1 5.25C0.585786 5.25 0.25 5.58579 0.25 6C0.25 6.41421 0.585786 6.75 1 6.75L1 5.25ZM26.5303 6.53033C26.8232 6.23743 26.8232 5.76256 26.5303 5.46967L21.7574 0.696697C21.4645 0.403804 20.9896 0.403804 20.6967 0.696697C20.4038 0.989591 20.4038 1.46446 20.6967 1.75736L24.9393 6L20.6967 10.2426C20.4038 10.5355 20.4038 11.0104 20.6967 11.3033C20.9896 11.5962 21.4645 11.5962 21.7574 11.3033L26.5303 6.53033ZM1 6.75L26 6.75L26 5.25L1 5.25L1 6.75Z" fill="currentColor"/>
+              </svg>
+            </button>
+          </form>
+          <script type="application/json" data-product-json>{{ product_obj | json }}</script>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+

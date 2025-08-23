@@ -1,0 +1,229 @@
+.custom-banner__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.custom-banner__button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.custom-banner__button:hover .custom-banner__button-icon {
+  transform: translateX(6px);
+}
+
+.custom-banner__button-icon {
+  flex: 0 0 auto;
+  transition: transform 0.3s ease;
+}
+.custom-banner__button--mobile {
+  display: none;
+}
+.custom-banner__mobile-cta {
+  text-align: center;
+  
+}
+.custom-banner {
+  position: relative;
+}
+
+.custom-banner__media {
+  position: relative;
+  overflow: hidden;
+  min-height: 400px;
+  aspect-ratio: 16/9;
+}
+
+.custom-banner__img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.custom-banner__content {
+  position: relative;
+  margin: 0 auto;
+  max-width: 1440px;
+}
+
+.custom-banner__content-inner,
+.custom-banner__top-strip .page-width,
+.custom-banner__strip .page-width {
+  max-width: 1340px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 16.52px;
+}
+
+.custom-banner__content--top {
+  align-items: flex-start;
+}
+.custom-banner__content--middle {
+  align-items: center;
+}
+.custom-banner__content--bottom {
+  align-items: flex-end;
+}
+
+.custom-banner__content--align-left {
+  justify-content: flex-start;
+}
+.custom-banner__content--align-center {
+  justify-content: center;
+}
+.custom-banner__content--align-right {
+  justify-content: flex-end;
+}
+
+.custom-banner__card {
+  color: rgb(var(--color-foreground));
+}
+
+.custom-banner__card {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 50px;
+  max-width: 583px;
+}
+
+.custom-banner__heading {
+  margin: 0 0 5rem;
+  font-size: 70px;
+  line-height: 100%;
+  letter-spacing: 0;
+  font-weight: 500;
+  font-family: "Jost", sans-serif;
+}
+.custom-banner__text {
+  margin: 0 0 5rem;
+  font-size: 20px;
+  line-height: 140%;
+  letter-spacing: 0;
+}
+
+.custom-banner__strip {
+  border-top: 1px solid rgba(var(--color-foreground), 0.2);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+}
+
+.custom-banner__strip-text {
+  margin: 0;
+  padding: 1rem 0;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0px;
+  font-size: 1.6rem;
+  line-height: 100%;
+  font-weight: 400;
+  font-family: "Jost", sans-serif;
+}
+
+/* Top promo strip */
+.custom-banner__top-strip {
+  background: #ffffff;
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.15);
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 2;
+}
+
+.custom-banner__top-strip-inner {
+  display: grid;
+  grid-template-columns: 1fr 2fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.8rem 0;
+  font-size: 1.3rem;
+}
+
+.custom-banner__top-left {
+  font-weight: 600;
+}
+.custom-banner__top-center {
+  text-align: center;
+  opacity: 0.9;
+}
+.custom-banner__top-cta {
+  justify-self: end;
+}
+
+@media (max-width: 749px) {
+  .custom-banner__media {
+    min-height: 500px; 
+    aspect-ratio: 4/5; 
+  }
+
+  .custom-banner__card {
+    background: transparent;
+    color: rgb(var(--color-foreground));
+    max-width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    top: 0;
+    bottom: auto;
+    /* padding: 2rem 1.6rem 4rem; */
+  }
+  .custom-banner__button--desktop {
+    display: none !important;
+  }
+  .custom-banner__button--mobile {
+    display: inline-flex;
+  }
+  .custom-banner__mobile-cta {
+    transform: translateY(-95px);
+    margin-bottom: -64px;
+  }
+  .custom-banner__strip-text {
+    font-size: 14px;
+    margin-top: 16px;
+  }
+  .custom-banner__content {
+    align-items: flex-start;
+    justify-content: center;
+    position: initial;
+
+  }
+
+  .custom-banner__content--align-left,
+  .custom-banner__content--align-right {
+    justify-content: center;
+  }
+
+  .custom-banner__heading {
+    margin: 0 0 2rem;
+    font-size: 30px;
+    line-height: 1.2;
+  }
+
+  .custom-banner__text {
+    margin: 0 0 3rem;
+    font-size: 1.6rem;
+    line-height: 1.4;
+  }
+
+  .custom-banner__button {
+    /* margin-top: 32rem; */
+    padding: 1.2rem 2.4rem;
+    font-size: 1.6rem;
+  }
+
+  .custom-banner__button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+  }
+
+  .custom-banner__top-strip-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}

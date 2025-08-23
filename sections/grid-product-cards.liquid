@@ -1,0 +1,251 @@
+{{ 'featured-six-products.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'featured-six-products.js' | asset_url }}" defer></script>
+
+<section
+  class="fsp-section"
+  id="section-{{ section.id }}"
+  style="
+    padding-top: {{ section.settings.padding_top | default: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 0 }}px;
+  "
+>
+  {%- if section.settings.heading != blank -%}
+    <h2 class="fsp-heading">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+  <div class="fsp-grid">
+    {%- assign product_limit = section.settings.product_count | default: 6 -%}
+    {%- if section.settings.product_source == 'collection' and section.settings.collection -%}
+      {%- for product in section.settings.collection.products limit: product_limit -%}
+        {%- assign icon_key = 'icon_pos_' | append: forloop.index -%}
+        {%- assign icon_pos = section.settings[icon_key] | default: 'top-right' -%}
+        <article
+          class="fsp-card"
+          role="article"
+          data-product-id="{{ product.id }}"
+          data-modal-id="fsp-modal-{{ product.id }}"
+        >
+          {%- if product.featured_media -%}
+            {%- assign image_alt = product.featured_media.alt | default: product.title -%}
+            <a href="{{ product.url }}" class="fsp-card__image-link">
+              {{
+                product.featured_media
+                | image_url: width: 800
+                | image_tag: alt: image_alt, loading: 'lazy', class: 'fsp-card__image'
+              }}
+            </a>
+            <span
+              class="fsp-icon fsp-icon--{{ icon_pos | handleize }}"
+              aria-hidden="false"
+              role="button"
+              tabindex="0"
+              aria-label="Quick view {{ product.title }}"
+              data-open-modal="fsp-modal-{{ product.id }}"
+            >
+              {% render 'fsp-plus-icon' %}
+            </span>
+          {%- endif -%}
+
+          {% render 'fsp-quick-view', product: product %}
+        </article>
+      {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..6) -%}
+        {%- assign key = 'product_' | append: i -%}
+        {%- assign product = section.settings[key] -%}
+        {%- assign icon_key = 'icon_pos_' | append: forloop.index -%}
+        {%- assign icon_pos = section.settings[icon_key] | default: 'top-right' -%}
+        {%- if product -%}
+          <article
+            class="fsp-card"
+            role="article"
+            data-product-id="{{ product.id }}"
+            data-modal-id="fsp-modal-{{ product.id }}"
+          >
+            {%- if product.featured_media -%}
+              {%- assign image_alt = product.featured_media.alt | default: product.title -%}
+              <a href="{{ product.url }}" class="fsp-card__image-link">
+                {{
+                  product.featured_media
+                  | image_url: width: 800
+                  | image_tag: alt: image_alt, loading: 'lazy', class: 'fsp-card__image'
+                }}
+              </a>
+              <span
+                class="fsp-icon fsp-icon--{{ icon_pos | handleize }}"
+                aria-hidden="false"
+                role="button"
+                tabindex="0"
+                aria-label="Quick view {{ product.title }}"
+                data-open-modal="fsp-modal-{{ product.id }}"
+              >
+                {% render 'fsp-plus-icon' %}
+              </span>
+            {%- endif -%}
+
+            {% render 'fsp-quick-view', product: product %}
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "The Grid",
+  "settings": [
+    { "type": "text",
+    "id": "heading",
+    "label": "Heading",
+    "default": "Tisso vison in the wild"
+    },
+    {
+      "type": "text",
+    "id": "heading_link",
+    "label": "Heading link", "default": "Tisso vison in the wild" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (px)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (px)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "product_source",
+      "label": "Product source",
+      "default": "specific",
+      "options": [
+        { "value": "specific", "label": "Specific products" },
+        { "value": "collection", "label": "Collection" }
+      ]
+    },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "product_count", "label": "Product count", "min": 1, "max": 12, "step": 1, "default": 6 },
+    { "type": "product", "id": "product_1", "label": "Product 1" },
+    { "type": "product", "id": "product_2", "label": "Product 2" },
+    { "type": "product", "id": "product_3", "label": "Product 3" },
+    { "type": "product", "id": "product_4", "label": "Product 4" },
+    { "type": "product", "id": "product_5", "label": "Product 5" },
+    { "type": "product", "id": "product_6", "label": "Product 6" },
+    { "type": "header", "content": "Icon positions (desktop)" },
+    {
+      "type": "select",
+      "id": "icon_pos_1",
+      "label": "Card 1 icon position",
+      "default": "top-right",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-right", "label": "Top right" },
+        { "value": "top-center", "label": "Top center" },
+        { "value": "center-left", "label": "Center left" },
+        { "value": "center-right", "label": "Center right" },
+        { "value": "center", "label": "Center" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-right", "label": "Bottom right" },
+        { "value": "bottom-center", "label": "Bottom center" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "icon_pos_2",
+      "label": "Card 2 icon position",
+      "default": "top-right",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-right", "label": "Top right" },
+        { "value": "top-center", "label": "Top center" },
+        { "value": "center-left", "label": "Center left" },
+        { "value": "center-right", "label": "Center right" },
+        { "value": "center", "label": "Center" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-right", "label": "Bottom right" },
+        { "value": "bottom-center", "label": "Bottom center" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "icon_pos_3",
+      "label": "Card 3 icon position",
+      "default": "top-right",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-right", "label": "Top right" },
+        { "value": "top-center", "label": "Top center" },
+        { "value": "center-left", "label": "Center left" },
+        { "value": "center-right", "label": "Center right" },
+        { "value": "center", "label": "Center" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-right", "label": "Bottom right" },
+        { "value": "bottom-center", "label": "Bottom center" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "icon_pos_4",
+      "label": "Card 4 icon position",
+      "default": "top-right",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-right", "label": "Top right" },
+        { "value": "top-center", "label": "Top center" },
+        { "value": "center-left", "label": "Center left" },
+        { "value": "center-right", "label": "Center right" },
+        { "value": "center", "label": "Center" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-right", "label": "Bottom right" },
+        { "value": "bottom-center", "label": "Bottom center" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "icon_pos_5",
+      "label": "Card 5 icon position",
+      "default": "top-right",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-right", "label": "Top right" },
+        { "value": "top-center", "label": "Top center" },
+        { "value": "center-left", "label": "Center left" },
+        { "value": "center-right", "label": "Center right" },
+        { "value": "center", "label": "Center" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-right", "label": "Bottom right" },
+        { "value": "bottom-center", "label": "Bottom center" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "icon_pos_6",
+      "label": "Card 6 icon position",
+      "default": "top-right",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-right", "label": "Top right" },
+        { "value": "top-center", "label": "Top center" },
+        { "value": "center-left", "label": "Center left" },
+        { "value": "center-right", "label": "Center right" },
+        { "value": "center", "label": "Center" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-right", "label": "Bottom right" },
+        { "value": "bottom-center", "label": "Bottom center" }
+      ]
+    }
+  ],
+  "presets": [
+      { "name": "The Grid" },
+    { "name": "The Grid with link" }
+  ]
+}
+{% endschema %}
