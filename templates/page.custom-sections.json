@@ -11,13 +11,89 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "grid_product_cards_3zUrth": {
+      "type": "grid-product-cards",
+      "name": "The Grid",
+      "settings": {
+        "heading": "Tisso vison in the wild",
+        "heading_link": "Tisso vison in the wild",
+        "padding_top": 90,
+        "padding_bottom": 0,
+        "product_source": "collection",
+        "collection": "frontpage",
+        "product_count": 6,
+        "product_1": "",
+        "product_2": "",
+        "product_3": "",
+        "product_4": "",
+        "product_5": "",
+        "product_6": "",
+        "icon_pos_1": "top-right",
+        "icon_pos_2": "center",
+        "icon_pos_3": "center-left",
+        "icon_pos_4": "center",
+        "icon_pos_5": "top-right",
+        "icon_pos_6": "center-left"
+      }
+    },
+    "custom_image_banner_qf6hTd": {
+      "type": "custom-image-banner",
+      "blocks": {
+        "heading_MrxgdY": {
+          "type": "heading",
+          "settings": {
+            "heading": "The Gift Guide",
+            "heading_size": "h1"
+          }
+        },
+        "text_3zk3iB": {
+          "type": "text",
+          "settings": {
+            "text": "Discover Joy: Your Ultimate Holiday Gift Destination.",
+            "text_style": "body"
+          }
+        },
+        "button_aiXajx": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop now",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_MrxgdY",
+        "text_3zk3iB",
+        "button_aiXajx"
+      ],
+      "name": "Custom image banner",
+      "settings": {
+        "image_desktop": "shopify://shop_images/city-woman-fashion_925x_2x_e91139c3-68ff-49da-98c9-5a56a049fb30.jpg",
+        "image_mobile": "shopify://shop_images/autumn-photographer-taking-picture_925x_1619bf60-7f6c-4f08-8201-9e5f62349789.jpg",
+        "alt_text": "Banner",
+        "color_scheme": "scheme-1",
+        "enable_container": true,
+        "apply_card_bg": false,
+        "card_bg_opacity": 80,
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "desktop_content_position": "bottom",
+        "desktop_content_alignment": "left",
+        "bottom_strip_text": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "custom_image_banner_qf6hTd",
+    "grid_product_cards_3zUrth"
   ]
 }
