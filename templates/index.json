@@ -9,75 +9,6 @@
  */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "button"
-      ],
-      "disabled": true,
-      "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "image_behavior": "none",
-        "desktop_content_position": "bottom-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": false,
-        "color_scheme": "scheme-3",
-        "stack_images_on_mobile": false,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
-      }
-    },
-    "featured_collection": {
-      "type": "featured-collection",
-      "disabled": true,
-      "settings": {
-        "collection": "all",
-        "products_to_show": 8,
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 4,
-        "enable_desktop_slider": false,
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "color_scheme": "scheme-1",
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 44,
-        "padding_bottom": 36
-      }
-    },
     "custom_image_banner_e6fEnJ": {
       "type": "custom-image-banner",
       "blocks": {
@@ -110,10 +41,13 @@
       ],
       "name": "Custom image banner",
       "settings": {
-        "image_desktop": "shopify://shop_images/leather-jacket-and-tea_925x_2490cde1-7e61-4151-9a65-de8a763bc701.jpg",
+        "image_desktop": "shopify://shop_images/autumn-photographer-taking-picture_925x_1619bf60-7f6c-4f08-8201-9e5f62349789.jpg",
         "image_mobile": "shopify://shop_images/city-woman-fashion_925x_2x_e91139c3-68ff-49da-98c9-5a56a049fb30.jpg",
         "alt_text": "Banner",
         "color_scheme": "",
+        "enable_container": true,
+        "apply_card_bg": false,
+        "card_bg_opacity": 80,
         "padding_top_desktop": 0,
         "padding_bottom_desktop": 0,
         "padding_top_mobile": 0,
@@ -128,6 +62,7 @@
       "name": "The Grid",
       "settings": {
         "heading": "Tisso vison in the wild",
+        "heading_link": "Tisso vison in the wild",
         "padding_top": 0,
         "padding_bottom": 0,
         "product_source": "collection",
@@ -149,8 +84,6 @@
     }
   },
   "order": [
-    "image_banner",
-    "featured_collection",
     "custom_image_banner_e6fEnJ",
     "grid_product_cards_VRDjWU"
   ]
