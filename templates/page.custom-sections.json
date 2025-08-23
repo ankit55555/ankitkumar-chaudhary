@@ -17,31 +17,6 @@
         "padding_bottom": 28
       }
     },
-    "grid_product_cards_3zUrth": {
-      "type": "grid-product-cards",
-      "name": "The Grid",
-      "settings": {
-        "heading": "Tisso vison in the wild",
-        "heading_link": "Tisso vison in the wild",
-        "padding_top": 90,
-        "padding_bottom": 0,
-        "product_source": "collection",
-        "collection": "frontpage",
-        "product_count": 6,
-        "product_1": "",
-        "product_2": "",
-        "product_3": "",
-        "product_4": "",
-        "product_5": "",
-        "product_6": "",
-        "icon_pos_1": "top-right",
-        "icon_pos_2": "center",
-        "icon_pos_3": "center-left",
-        "icon_pos_4": "center",
-        "icon_pos_5": "top-right",
-        "icon_pos_6": "center-left"
-      }
-    },
     "custom_image_banner_qf6hTd": {
       "type": "custom-image-banner",
       "blocks": {
@@ -63,7 +38,7 @@
           "type": "button",
           "settings": {
             "button_label": "Shop now",
-            "button_link": ""
+            "button_link": "shopify://collections/frontpage"
           }
         }
       },
@@ -88,6 +63,31 @@
         "desktop_content_position": "bottom",
         "desktop_content_alignment": "left",
         "bottom_strip_text": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
+      }
+    },
+    "grid_product_cards_3zUrth": {
+      "type": "grid-product-cards",
+      "name": "The Grid",
+      "settings": {
+        "heading": "Tisso vison in the wild",
+        "heading_link": "Tisso vison in the wild",
+        "padding_top": 90,
+        "padding_bottom": 0,
+        "product_source": "collection",
+        "collection": "frontpage",
+        "product_count": 6,
+        "product_1": "",
+        "product_2": "",
+        "product_3": "",
+        "product_4": "",
+        "product_5": "",
+        "product_6": "",
+        "icon_pos_1": "top-right",
+        "icon_pos_2": "center",
+        "icon_pos_3": "center-left",
+        "icon_pos_4": "center",
+        "icon_pos_5": "top-right",
+        "icon_pos_6": "center-left"
       }
     }
   },
