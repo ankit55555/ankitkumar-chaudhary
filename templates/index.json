@@ -52,8 +52,8 @@
         "padding_bottom_desktop": 0,
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 0,
-        "desktop_content_position": "bottom",
-        "desktop_content_alignment": "left",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "center",
         "bottom_strip_text": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
       }
     },
